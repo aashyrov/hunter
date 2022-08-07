@@ -83,18 +83,23 @@ if("@ANDROID@")
   if("@CMAKE_ANDROID_ARCH@" STREQUAL "armeabi-v7a")
       set(toolset_version "arm")
       set(address_model 32)
+      set(abi "aapcs")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "arm64-v8a")
       set(toolset_version "arm")
       set(address_model 64)
+      set(abi "aapcs")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86_64")
       set(toolset_version "x86_64")
       set(address_model 64)
+      set(abi "sysv")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86")
       set(toolset_version "x86")
       set(address_model 32)
+      set(abi "sysv")
   else()
       set(toolset_version "arm")
       set(address_model 64)
+      set(abi "aapcs")
   endif()
 elseif("@APPLE@")
   set(toolset_name "darwin")
@@ -255,8 +260,9 @@ set(boost_user_jam "@HUNTER_PACKAGE_BUILD_DIR@/boost-user.jam")
 # Escape --user-config=C:\projects\hunter-tdmm2\_testing\Hunter\_Base\5398c9d\30f4075\2d24521\Build\Boost\__filesystem\Build\boost.user.jam
 # Error -> Invalid character escape '\p'.
 string(COMPARE EQUAL "@HUNTER_PACKAGE_COMPONENT@" "context" component_is_context)
+string(COMPARE EQUAL "@HUNTER_PACKAGE_COMPONENT@" "coroutine" component_is_coroutine)
 
-if(component_is_context)
+if(component_is_context OR component_is_coroutine)
 set(
     build_opts
     -a
@@ -268,7 +274,7 @@ set(
     binary-format=elf
     address-model=${address_model}
     architecture=${toolset_version}
-    abi=aapcs
+    abi=${abi}
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
     --abbreviate-paths
