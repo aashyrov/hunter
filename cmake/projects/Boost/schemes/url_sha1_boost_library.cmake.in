@@ -266,8 +266,8 @@ set(
     --layout=tagged
     toolset=${toolset_name}
     binary-format=elf
-    address-model=64
-    architecture=arm
+    address-model=${address_model}
+    architecture=${toolset_version}
     abi=aapcs
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
