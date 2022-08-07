@@ -267,24 +267,25 @@ set(boost_user_jam "@HUNTER_PACKAGE_BUILD_DIR@/boost-user.jam")
 string(COMPARE EQUAL "@HUNTER_PACKAGE_COMPONENT@" "context" component_is_context)
 string(COMPARE EQUAL "@HUNTER_PACKAGE_COMPONENT@" "coroutine" component_is_coroutine)
 
-if(component_is_context OR component_is_coroutine)
-set(
-    build_opts
-    -a
-    ${link_opts}
-    threading=multi
-    ${variants}
-    --layout=tagged
-    toolset=${toolset_name}
-    binary-format=elf
-    address-model=${address_model}
-    architecture=${architecture}
-    abi=${abi}
-    "--user-config=${boost_user_jam}"
-    --with-@HUNTER_PACKAGE_COMPONENT@
-    --abbreviate-paths
-)
-
+if("@ANDROID@")
+    if(component_is_context OR component_is_coroutine)
+        set(
+            build_opts
+            -a
+            ${link_opts}
+            threading=multi
+            ${variants}
+        --layout=tagged
+        toolset=${toolset_name}
+        binary-format=elf
+        address-model=${address_model}
+        architecture=${architecture}
+        abi=${abi}
+        "--user-config=${boost_user_jam}"
+        --with-@HUNTER_PACKAGE_COMPONENT@
+        --abbreviate-paths
+    )
+    endif()
 else()
 set(
     build_opts
