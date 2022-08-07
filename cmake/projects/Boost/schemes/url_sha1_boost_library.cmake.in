@@ -79,18 +79,22 @@ if("@ANDROID@")
   string(COMPARE EQUAL "@CMAKE_ANDROID_ARCH@" "x86_64" is_x86_64)
   string(COMPARE EQUAL "@CMAKE_ANDROID_ARCH@" "x86" is_x86)
 
-  if(is_arm)
+  message(STATUS "CMAKE_ANDROID_ARCH=@CMAKE_ANDROID_ARCH@")
+  if("@CMAKE_ANDROID_ARCH@" STREQUAL "armeabi-v7a")
       set(toolset_version "arm")
       set(address_model 32)
-  elseif(is_arm64)
-      set(toolset_version "arm64")
+  elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "arm64-v8a")
+      set(toolset_version "arm")
       set(address_model 64)
-  elseif(is_x86_64)
+  elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86_64")
       set(toolset_version "x86_64")
       set(address_model 64)
-  elseif(is_x86)
+  elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86")
       set(toolset_version "x86")
       set(address_model 32)
+  else()
+      set(toolset_version "arm")
+      set(address_model 64)
   endif()
 elseif("@APPLE@")
   set(toolset_name "darwin")
@@ -262,8 +266,9 @@ set(
     --layout=tagged
     toolset=${toolset_name}
     binary-format=elf
-    address-model=${address_model}
-    architecture=${toolset_version}
+    address-model=64
+    architecture=arm
+    abi=aapcs
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
     --abbreviate-paths
