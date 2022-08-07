@@ -253,7 +253,7 @@ set(
     threading=multi
     ${variants}
     --layout=tagged
-    toolset=${toolset_full_name}
+    toolset=${toolset_name}
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
     --abbreviate-paths
