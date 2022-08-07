@@ -82,22 +82,27 @@ if("@ANDROID@")
   message(STATUS "CMAKE_ANDROID_ARCH=@CMAKE_ANDROID_ARCH@")
   if("@CMAKE_ANDROID_ARCH@" STREQUAL "armeabi-v7a")
       set(toolset_version "arm")
+      set(architecture "arm")
       set(address_model 32)
       set(abi "aapcs")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "arm64-v8a")
       set(toolset_version "arm")
+      set(architecture "arm")
       set(address_model 64)
       set(abi "aapcs")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86_64")
       set(toolset_version "x86_64")
+      set(architecture "x86")
       set(address_model 64)
       set(abi "sysv")
   elseif("@CMAKE_ANDROID_ARCH@" STREQUAL "x86")
       set(toolset_version "x86")
+      set(architecture "x86")
       set(address_model 32)
       set(abi "sysv")
   else()
       set(toolset_version "arm")
+      set(architecture "arm")
       set(address_model 64)
       set(abi "aapcs")
   endif()
@@ -273,7 +278,7 @@ set(
     toolset=${toolset_name}
     binary-format=elf
     address-model=${address_model}
-    architecture=${toolset_version}
+    architecture=${architecture}
     abi=${abi}
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
